@@ -100,6 +100,8 @@ export type SessionSearchPages = {
 	data: SessionSearchResponse | undefined;
 	isLoading: boolean;
 	isFetching: boolean;
+	/** The first page still shows the previous question's rows while this one loads. */
+	isPlaceholderData: boolean;
 	error: Error | null;
 	/** The last page came back short: there is nothing more to fetch. */
 	exhausted: boolean;
@@ -124,6 +126,7 @@ function joinSessionSearchPages(pages: UseQueryResult<SessionSearchResponse>[]):
 		data: first?.data ? { ...first.data, results } : undefined,
 		isLoading: first?.isLoading ?? false,
 		isFetching: pages.some((page) => page.isFetching),
+		isPlaceholderData: first?.isPlaceholderData ?? false,
 		error: first?.error ?? null,
 		exhausted: Boolean(last?.data && !last.isPlaceholderData && (lastResults?.length ?? 0) < SESSION_SEARCH_PAGE_SIZE),
 	};
