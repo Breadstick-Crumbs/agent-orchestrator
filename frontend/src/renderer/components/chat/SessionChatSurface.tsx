@@ -475,16 +475,18 @@ export const SessionChatSurface = memo(function SessionChatSurface({
 		}
 	}, [navigateToAnnotation, onSelectChat]);
 	useEffect(() => {
-		const reveal = takeSessionSearchReveal(session.id);
+		// Keyed like the reveal was: this machine's sessions by id, another
+		// machine's by host and id, so a remote target never lands here.
+		const reveal = takeSessionSearchReveal(uiSessionId);
 		if (reveal) {
 			applyReveal(reveal);
 			return;
 		}
-		return subscribeSessionSearchReveal(session.id, () => {
-			const next = takeSessionSearchReveal(session.id);
+		return subscribeSessionSearchReveal(uiSessionId, () => {
+			const next = takeSessionSearchReveal(uiSessionId);
 			if (next) applyReveal(next);
 		});
-	}, [applyReveal, session.id]);
+	}, [applyReveal, uiSessionId]);
 
 	const findOpen = Boolean(find);
 	const searchMatches = useSessionSearchMatches(
