@@ -1,4 +1,4 @@
-import { ChevronDown, GitPullRequest, Users } from "lucide-react";
+import { ChevronDown, GitPullRequest, Users } from "@/components/app-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSessionParticipants } from "../hooks/useSessionParticipants";
